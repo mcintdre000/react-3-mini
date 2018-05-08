@@ -6,7 +6,8 @@ import './App.css';
 // Toast notification dependencies
 import { ToastContainer, toast } from 'react-toastify';
 
-const baseUrl = "https://joes-autos.herokuapp.com/api"
+const baseUrl = 'https://joes-autos.herokuapp.com/api';
+
 class App extends Component {
   constructor( props ) {
     super( props );
@@ -30,27 +31,26 @@ class App extends Component {
   }
 
   getVehicles() {
-    axios.get(`${baseUrl}/vehicles`).then(response => {console.log(response)
-    this.setState({
-      vehiclesToDisplay: response.data
-    })
-    toast.success('We got dem vehicles, son!')
-    }).catch(() => toast.error('Uh oh, something happend'))
-    // setState with response -> vehiclesToDisplay
+    axios.get(`${baseUrl}/vehicles`).then(response => {
+      this.setState({
+        vehiclesToDisplay: response.data
+      })
+      toast.success('We got dem vehicles, son 🤙🏾')
+    }).catch(() => toast.error('Uh oh, something happened'))
   }
 
   getPotentialBuyers() {
-    // axios (GET)
+    axios.get('')// axios (GET)
     // setState with response -> buyersToDisplay
   }
 
   sellCar( id ) {
-    axios.delete(`${baseUrl}/vehicles/${id}`).then(response => {console.log('---',response)
-    this.setState({
-      vehiclesToDisplay: response.data.vehicles
+    axios.delete(`${baseUrl}/vehicles/${id}`).then(res => {
+      console.log(res);
+      this.setState({
+        vehiclesToDisplay: res.data.vehicles
+      })
     })
-  }).catch(() => toast.error('failed'))
-    // setState with response -> vehiclesToDisplay
   }
 
   filterByMake() {
@@ -69,12 +69,12 @@ class App extends Component {
 
   updatePrice( priceChange, id ) {
     axios.put(`${baseUrl}/vehicles/${id}/${priceChange}`).then(response => {
-      console.log('--------------------',response)
-      // this.setState({
-      //   vehiclesToDisplay: response.data.vehicles
-      // })
-    })
-    // setState with response -> vehiclesToDisplay
+      console.log(response)
+      this.setState({
+        vehiclesToDisplay: response.data.vehicles
+      })
+      toast.success('Price has been updated')
+    }).catch(() => toast.error('Uh Oh!'))
   }
 
   addCar() {
@@ -85,14 +85,13 @@ class App extends Component {
       year: this.refs.year.value,
       price: this.refs.price.value
     };
-
-    axios.post(`${baseUrl}/vehicles`, newCar).then(response => {
-      console.log('---',response)
+    axios.post(`${baseUrl}/vehicles`, newCar).then(res => {
+      console.log(res)
       this.setState({
-        vehiclesToDisplay: response.data.vehicles
+        vehiclesToDisplay: res.data.vehicles
       })
-    }).catch(() => toast.error('failed'))
-    // setState with response -> vehiclesToDisplay
+      toast.success('Heck yeah, man, we just made a killer webrequest')
+    }).catch(() => toast.error('Uh oh!'))
   }
 
   addBuyer() {
